@@ -1,0 +1,32 @@
+---
+title: "AyaJuliaPackage"
+author: "Aya Hussain"
+date: "11/14/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#' @title Simple Monte-Carlo integration
+#'
+#' @description Compute an approximation of the integral of the function f(x)
+#' with respect to dx in the range [a, b] by Monte-Carlo integration using
+#' uniform sampling.
+#' @param x_range A \code{vector} of dimension 2 used to denote the integration
+#' region of interest, i.e. [a, b].
+#' @param fun A \code{string} containing the function to be integrated. It
+#' is assumed that \code{x} is used as the variable of interest.
+#' @param B A \code{numeric} (integer) used to denote the number of simulations.
+#' @param seed A \code{numeric} used to control the seed of the random number
+#' generator used by this function.
+#' @return A \code{list} containing the following attributes:
+#' \describe{
+#'      \item{I}{Estimated value of the integral}
+#'      \item{var}{Estimated variance of the estimator}
+#' }
+#' @author Stephane Guerrier
+#' @importFrom stats runif
+#' @export
+#' @examples
