@@ -1,5 +1,4 @@
 #' @title Linear Regression
-#'
 #' @description Linear regression is used to predict the value of an outcome variable Y based on one or more input predictor variables X.
 #' @param y A binary \code{vector} representing the response or output.
 #' @param X A \code{matrix} of regressors or inputs.
@@ -57,9 +56,12 @@ my_lm <- function(y, x, alpha = 0.05) {
 
   Cp <- sse - 2*p*sigma2.hat
 
+  #Estimating the variance beta
+  var.beta <- sigma2.hat*optim(t(X)%*%X)
+
   #Calculating confidence intervals
   quant <- 1 - alpha/2
-  ci.beta
+  ci.beta <-c(beta.hat-qnorm(p=quant)*sqrt(var.beta), beta.hat+ qnorm(p=quant)*sqrt(var.beta))
 
 
   # Return all estimated values
