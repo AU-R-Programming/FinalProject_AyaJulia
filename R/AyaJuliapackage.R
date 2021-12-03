@@ -57,7 +57,7 @@ my_lm <- function(y, x, alpha = 0.05) {
   Cp <- sse + 2*p*sigma2.hat
 
   #Estimate of the variance of the estimated beta
-  var.beta <- as.numeric(sigma2.hat) * solve(t(X) %*% X)
+  var.beta <- sigma2.hat * solve(t(X) %*% X)
 
   #Calculating confidence intervals
   quant <- 1 - alpha/2
