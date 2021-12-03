@@ -54,23 +54,45 @@ my_lm <- function(y, x, alpha = 0.05) {
   df <- n - p
   sigma2.hat <- (1/df)*t(resid)%*%resid
 
-  Cp <- sse - 2*p*sigma2.hat
+  Cp <- sse + 2*p*sigma2.hat
 
-  #Estimating the variance beta
-  var.beta <- sigma2.hat*solve(t(X)%*%X)
+  #Estimate of the variance of the estimated beta
+  var.beta <- as.numeric(sigma2.hat) * solve(t(X) %*% X)
 
   #Calculating confidence intervals
   quant <- 1 - alpha/2
   ci.beta <-c(beta.hat-qnorm(p=quant)*sqrt(var.beta), beta.hat+ qnorm(p=quant)*sqrt(var.beta))
 
+  #Calculating F statistics
+  dfm <- p-1
+  dfe <- n - p
+  ssm <- sum((y_hat - y_mean)^2)
+
+  msm <- ssm/dfm
+  mse <- sse/dfe
+
+  f_stats <- msm/mse
+  p_value <- 1-pf(f_stats,n-1, df)
+
 
   # Return all estimated values
-  return(list(beta = c(beta.hat$par), sigma2 = sigma2.hat, Cp = Cp, R2 = R_squared, ci = ci.beta))
-
-
+  return(list(beta = c(beta.hat$par), sigma2 = sigma2.hat, Cp = Cp, R2 = R_squared, ci = ci.beta, f_statistic = f_stats, p-value = p_value))
 
 }
 
-plot(y ~ X[,2], data = , main="Least square error regression for x")
-abline(a = beta.hat$par[1], b = beta.hat$par[2], col = "red")
+plot_residual <- function(residuals){
+  df_resid <- data.frame(y = resid)
+  plot_resid <- ggplot(df_resid, aes(sample = y))
+  return (plot_resid + stat_qq() + stat_qq_line() + ggtitle("QQ Plot Residuals"))
+
+}
+
+plot_histogram_residuals <- function (residuals){
+  df_resid <- data.frame(y = resid)
+  plot_hist <- ggplot(data = data, aes(x = df_resid)) +
+    geom_histogram(fill = 'steelblue', color = 'black') +
+    labs(title = 'Histogram of Residuals', x = 'Residuals', y = 'Frequency')
+  return (plot_hist)
+
+}
 
