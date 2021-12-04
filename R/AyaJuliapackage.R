@@ -3,7 +3,7 @@
 #' @param y A binary \code{vector} representing the response or output.
 #' @param X A \code{matrix} of regressors or inputs.
 #' @param alpha A \code{numeric} for setting the confidence level.
-#' @return A \code{dataframe} containing the beta estimator, sigma squared, Cp, R squared, confidence intervals, F stattistics, p-value, and residuals
+#' @return A \code{dataframe} containing the beta estimator, sigma squared, Cp, R squared, confidence intervals, F stattistics, p-value, residuals, and predictor
 #' @author AyaJulia
 #' @importFrom stats runif
 #' @export
@@ -69,7 +69,7 @@ my_lm <- function(y, x, alpha = 0.05) {
 
 
   # Return all estimated values
-  return(list(beta = c(beta.hat$par), sigma2 = sigma2.hat, Cp = Cp, R2 = R_squared, ci = ci.beta, f_statistic = f_stats, p_value = p_value, residuals = c(resid)))
+  return(list(beta = c(beta.hat$par), sigma2 = sigma2.hat, Cp = Cp, R2 = R_squared, ci = ci.beta, f_statistic = f_stats, p_value = p_value, residuals = c(resid), predictor = c(y_hat)))
 
 }
 
@@ -80,7 +80,7 @@ my_lm <- function(y, x, alpha = 0.05) {
 #' @return A \code{graph} with the residuals.
 #' @author AyaJulia
 #' @importFrom stats runif
-#' @export
+#' @export ggplot2
 #' @examples
 #'variables <- matrix(rnorm(400), ncol = 4)
 #'response <- rnorm(100)
@@ -101,7 +101,7 @@ plot_residual <- function(y, residuals){
 #' @return A \code{graph} with the residuals.
 #' @author AyaJulia
 #' @importFrom stats runif
-#' @export
+#' @export ggplot2
 #' @examples
 #'variables <- matrix(rnorm(400), ncol = 4)
 #'response <- rnorm(100)
@@ -114,8 +114,23 @@ plot_histogram_residuals <- function(residuals){
   return(plot_hist)
 }
 
-plot_residuals_fitted <- function(residuals){
 
-
+#' @title Plot Residuals versus fitted values
+#' @description This function will plot the residuals x the fitted values for the residuals for the my_lm function.
+#' @param predictor A \code{vector} representing the predictor.
+#' @param residuals A \code{vector} representing the residuals.
+#' @return A \code{graph} with the residuals.
+#' @author AyaJulia
+#' @importFrom stats runif
+#' @export ggplot2
+#' @examples
+#'variables <- matrix(rnorm(400), ncol = 4)
+#'response <- rnorm(100)
+#'alpha <- 0.05
+#'
+#'result <- my_lm(response, variables, alpha)
+#'plot_residuals_fitted(result$predictor,result$residuals)
+plot_residuals_fitted <- function(predictor,residuals){
+  plot_res_fit <- ggplot() + aes (x = test$residuals, y = test$predictor)+geom_point()
+  return(plot_res_fit)
 }
-
