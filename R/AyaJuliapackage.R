@@ -57,11 +57,11 @@ my_lm <- function(y, x, alpha = 0.05) {
   Cp <- sse + 2*p*sigma2.hat
 
   #Estimate of the variance of the estimated beta
-  var.beta <- sigma2.hat * solve(t(X) %*% X)
+  var.beta <- diag(as.numeric(sigma2.hat) * solve(t(X) %*% X))
 
   #Calculating confidence intervals
   quant <- 1 - alpha/2
-  ci.beta <-c(beta.hat-qnorm(p=quant)*sqrt(var.beta), beta.hat+ qnorm(p=quant)*sqrt(var.beta))
+  ci.beta <- matrix(c(as.matrix(beta.hat$par) - qnorm(p = quant)*sqrt(var.beta), as.matrix(beta.hat$par)+ qnorm(p = quant)*sqrt(var.beta)), ncol = 2)
 
   #Calculating F statistics
   dfm <- p-1
@@ -88,10 +88,10 @@ plot_residual <- function(residuals){
 }
 
 plot_histogram_residuals <- function (residuals){
-  df_resid <- data.frame(y = resid)
+  df_resid <- data.frame(y = c(c(1:nrow(resid)), resid)
   plot_hist <- ggplot(data = data, aes(x = df_resid)) +
-    geom_histogram(fill = 'steelblue', color = 'black') +
-    labs(title = 'Histogram of Residuals', x = 'Residuals', y = 'Frequency')
+  geom_histogram(fill = 'steelblue', color = 'black') +
+  labs(title = 'Histogram of Residuals', x = 'Residuals', y = 'Frequency')
   return (plot_hist)
 
 }
