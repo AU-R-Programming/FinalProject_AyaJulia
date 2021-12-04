@@ -12,26 +12,25 @@ library()
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-
-    # Application title
-    titlePanel("Old Faithful Geyser Data"),
-
-    # Sidebar with a slider input for number of bins
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
-        ),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-           plotOutput("distPlot")
+           # Application title
+           headerPanel("General linear model"),
+           sidebarPanel(
+             p("Select the inputs for the Dependent Variable"),
+             selectInput(inputId = "DepVar", label = "Dependent Variables", multiple = FALSE, choices = list("AvgIR", "YYYYMM", "SumCount", "AvgLTV", "AvgGFEE", "AvgRTC", "Date")),
+             p("Select the inputs for the Independent Variable"),
+             selectInput(inputId = "IndVar", label = "Independent Variables", multiple = FALSE, choices = list( "SumCount", "AvgIR", "YYYYMM", "AvgLTV", "AvgGFEE", "AvgRTC", "Date"))
+           ),
+           mainPanel(
+             verbatimTextOutput(outputId = "RegSum"),
+             verbatimTextOutput(outputId = "IndPrint"),
+             verbatimTextOutput(outputId = "DepPrint")
+             #plotOutput("hist")
         )
     )
 )
+
+
+
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
