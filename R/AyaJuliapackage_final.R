@@ -80,7 +80,7 @@ my_lm <- function(y, x, alpha = 0.05) {
 #' @return A \code{graph} with the residuals.
 #' @author AyaJulia
 #' @importFrom stats runif
-#' @export ggplot2
+#' @export
 #' @examples
 #'variables <- matrix(rnorm(400), ncol = 4)
 #'response <- rnorm(100)
@@ -101,7 +101,7 @@ plot_residual <- function(y, residuals){
 #' @return A \code{graph} with the residuals.
 #' @author AyaJulia
 #' @importFrom stats runif
-#' @export ggplot2
+#' @export
 #' @examples
 #'variables <- matrix(rnorm(400), ncol = 4)
 #'response <- rnorm(100)
@@ -122,7 +122,7 @@ plot_histogram_residuals <- function(residuals){
 #' @return A \code{graph} with the residuals.
 #' @author AyaJulia
 #' @importFrom stats runif
-#' @export ggplot2
+#' @export
 #' @examples
 #'variables <- matrix(rnorm(400), ncol = 4)
 #'response <- rnorm(100)
