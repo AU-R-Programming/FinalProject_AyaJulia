@@ -3,15 +3,16 @@
 #' @param y A binary \code{vector} representing the response or output.
 #' @param X A \code{matrix} of regressors or inputs.
 #' @param alpha A \code{numeric} for setting the confidence level.
-#' @return A \code{vector} containing the estimated weights and bias
+#' @return A \code{dataframe} containing the beta estimator, sigma squared, Cp, R squared, confidence intervals, F stattistics, p-value, and residuals
 #' @author AyaJulia
 #' @importFrom stats runif
 #' @export
 #' @examples
-#'x <- matrix(rnorm(400), ncol = 4)
-#'y <- rnorm(100)
+#'variables <- matrix(rnorm(400), ncol = 4)
+#'response <- rnorm(100)
 #'alpha <- 0.05
-
+#'
+#'my_lm(response, variables, alpha)
 my_lm <- function(y, x, alpha = 0.05) {
 
   # Define parameters
@@ -72,6 +73,21 @@ my_lm <- function(y, x, alpha = 0.05) {
 
 }
 
+#' @title Plot Residuals
+#' @description This function will plot the residuals for the my_lm function.
+#' @param y A \code{vector} representing the response.
+#' @param residuals A \code{vector} representing the residuals.
+#' @return A \code{graph} with the residuals.
+#' @author AyaJulia
+#' @importFrom stats runif
+#' @export
+#' @examples
+#'variables <- matrix(rnorm(400), ncol = 4)
+#'response <- rnorm(100)
+#'alpha <- 0.05
+#'
+#'result <- my_lm(response, variables, alpha)
+#'plot_residuals(y, result$residuals)
 plot_residual <- function(y, residuals){
   df_resid <- data.frame(y = residuals)
   plot_resid <- ggplot(df_resid, aes(sample = y))
@@ -79,7 +95,20 @@ plot_residual <- function(y, residuals){
 
 }
 
-
+#' @title Plot Histogram of Residuals
+#' @description This function will plot the histogram for the residuals for the my_lm function.
+#' @param residuals A \code{vector} representing the residuals.
+#' @return A \code{graph} with the residuals.
+#' @author AyaJulia
+#' @importFrom stats runif
+#' @export
+#' @examples
+#'variables <- matrix(rnorm(400), ncol = 4)
+#'response <- rnorm(100)
+#'alpha <- 0.05
+#'
+#'result <- my_lm(response, variables, alpha)
+#'plot_histogram_residuals(result$residuals)
 plot_histogram_residuals <- function(residuals){
   plot_hist <- ggplot() + aes(residuals)+ geom_histogram(binwidth=1, colour="black", fill="white")
   return(plot_hist)
