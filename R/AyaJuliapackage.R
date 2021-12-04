@@ -30,13 +30,13 @@ my_lm <- function(y, x, alpha = 0.05) {
 
   for (i in 2:ncol(X)){
     beta_zero[i] <- cov(y, X[,i])/var(X[,i])
-  }
+    }
 
   #Define loss function
   loss_func <- function(y, X, par){
     H <- t(y - X%*%par) %*% (y - X%*%par)
     return(H)
-  }
+    }
 
   # Estimate beta through loss function
   beta.hat <- optim(par = beta_zero, fn = loss_func, X = X, y = y, method = "BFGS")
@@ -77,8 +77,7 @@ my_lm <- function(y, x, alpha = 0.05) {
 
   # Return all estimated values
   return(list(beta = c(beta.hat$par), sigma2 = sigma2.hat, Cp = Cp, R2 = R_squared, ci = ci.beta, f_statistic = f_stats, p-value = p_value))
-
-}
+  }
 
 plot_residual <- function(residuals){
   df_resid <- data.frame(y = resid)
