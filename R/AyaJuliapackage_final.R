@@ -131,6 +131,6 @@ plot_histogram_residuals <- function(residuals){
 #'result <- my_lm(response, variables, alpha)
 #'plot_residuals_fitted(result$predictor,result$residuals)
 plot_residuals_fitted <- function(predictor,residuals){
-  plot_res_fit <- ggplot() + aes (x = test$residuals, y = test$predictor)+geom_point()
+  plot_res_fit <- ggplot() + aes (x = residuals, y = predictor)+geom_point()
   return(plot_res_fit)
 }
