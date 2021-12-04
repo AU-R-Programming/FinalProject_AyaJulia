@@ -2,19 +2,15 @@
 #' @description Linear regression is used to predict the value of an outcome variable Y based on one or more input predictor variables X.
 #' @param y A binary \code{vector} representing the response or output.
 #' @param X A \code{matrix} of regressors or inputs.
-#' @param init.val A \code{numeric} vector used for starting values (by default a vector of zeros).
+#' @param alpha A \code{numeric} for setting the confidence level.
 #' @return A \code{vector} containing the estimated weights and bias
 #' @author AyaJulia
 #' @importFrom stats runif
 #' @export
 #' @examples
-#'
-#'
-
-#' I created random values for x and y to test the functions
-x <- matrix(rnorm(400), ncol = 4)
-y <- rnorm(100)
-alpha <- 0.05
+#'x <- matrix(rnorm(400), ncol = 4)
+#'y <- rnorm(100)
+#'alpha <- 0.05
 
 my_lm <- function(y, x, alpha = 0.05) {
 
@@ -89,8 +85,8 @@ plot_histogram_residuals <- function(residuals){
   return(plot_hist)
 }
 
+plot_residuals_fitted <- function(residuals){
 
 
-
-
+}
 
