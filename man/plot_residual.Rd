@@ -23,7 +23,7 @@ response <- rnorm(100)
 alpha <- 0.05
 
 result <- my_lm(response, variables, alpha)
-plot_residuals(y, result$residuals)
+plot_residual(response, result$residuals)
 }
 \author{
 AyaJulia

@@ -87,7 +87,7 @@ my_lm <- function(y, x, alpha = 0.05) {
 #'alpha <- 0.05
 #'
 #'result <- my_lm(response, variables, alpha)
-#'plot_residuals(y, result$residuals)
+#'plot_residual(response, result$residuals)
 plot_residual <- function(y, residuals){
   df_resid <- data.frame(y = residuals)
   plot_resid <- ggplot(df_resid, aes(sample = y))
