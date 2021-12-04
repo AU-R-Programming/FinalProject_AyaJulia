@@ -87,11 +87,12 @@ plot_residual <- function(residuals){
 }
 
 plot_histogram_residuals <- function (residuals){
-  df_resid <- data.frame(y = c(c(1:nrow(resid)), resid)
-  plot_hist <- ggplot(data = data, aes(x = df_resid)) +
-  geom_histogram(fill = 'steelblue', color = 'black') +
-  labs(title = 'Histogram of Residuals', x = 'Residuals', y = 'Frequency')
-  return (plot_hist)
-
+  plot_hist <- ggplot() + aes(resid)+ geom_histogram(binwidth=1, colour="black", fill="white")
+  return(plot_hist)
 }
+
+
+
+
+
 
