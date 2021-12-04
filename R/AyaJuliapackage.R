@@ -11,9 +11,7 @@
 #'
 #'
 
-set.seed(123)
-
-#I created random values for x and y to test the functions
+#' I created random values for x and y to test the functions
 x <- matrix(rnorm(400), ncol = 4)
 y <- rnorm(100)
 alpha <- 0.05
@@ -61,33 +59,33 @@ my_lm <- function(y, x, alpha = 0.05) {
 
   #Calculating confidence intervals
   quant <- 1 - alpha/2
-  ci.beta <- matrix(c(as.matrix(beta.hat$par) - qnorm(p = quant)*sqrt(var.beta), as.matrix(beta.hat$par)+ qnorm(p = quant)*sqrt(var.beta)), ncol = 2)
+  ci.beta <- c(as.matrix(beta.hat$par) - qnorm(p = quant)*sqrt(var.beta), as.matrix(beta.hat$par)+ qnorm(p = quant)*sqrt(var.beta))
 
   #Calculating F statistics
   dfm <- p-1
   dfe <- n - p
   ssm <- sum((y_hat - y_mean)^2)
-
-  msm <- ssm/dfm
-  mse <- sse/dfe
-
-  f_stats <- msm/mse
-  p_value <- 1-pf(f_stats,n-1, df)
+  msm <- (ssm/dfm)
+  mse <- (sse/dfe)
+  f_stats <- (msm/mse)
+  p_value <- (1-pf(f_stats,n-1, df))
 
 
   # Return all estimated values
-  return(list(beta = c(beta.hat$par), sigma2 = sigma2.hat, Cp = Cp, R2 = R_squared, ci = ci.beta, f_statistic = f_stats, p-value = p_value))
-  }
+  return(list(beta = c(beta.hat$par), sigma2 = sigma2.hat, Cp = Cp, R2 = R_squared, ci = ci.beta, f_statistic = f_stats, p_value = p_value, residuals = c(resid)))
 
-plot_residual <- function(residuals){
-  df_resid <- data.frame(y = resid)
+}
+
+plot_residual <- function(y, residuals){
+  df_resid <- data.frame(y = residuals)
   plot_resid <- ggplot(df_resid, aes(sample = y))
   return (plot_resid + stat_qq() + stat_qq_line() + ggtitle("QQ Plot Residuals"))
 
 }
 
-plot_histogram_residuals <- function (residuals){
-  plot_hist <- ggplot() + aes(resid)+ geom_histogram(binwidth=1, colour="black", fill="white")
+
+plot_histogram_residuals <- function(residuals){
+  plot_hist <- ggplot() + aes(residuals)+ geom_histogram(binwidth=1, colour="black", fill="white")
   return(plot_hist)
 }
 
