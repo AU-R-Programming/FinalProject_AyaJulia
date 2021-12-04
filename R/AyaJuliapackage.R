@@ -2,21 +2,15 @@
 #' @description Linear regression is used to predict the value of an outcome variable Y based on one or more input predictor variables X.
 #' @param y A binary \code{vector} representing the response or output.
 #' @param X A \code{matrix} of regressors or inputs.
-#' @param init.val A \code{numeric} vector used for starting values (by default a vector of zeros).
+#' @param alpha A \code{numeric} for setting the confidence level.
 #' @return A \code{vector} containing the estimated weights and bias
 #' @author AyaJulia
 #' @importFrom stats runif
 #' @export
 #' @examples
-#'
-#'
-
-set.seed(123)
-
-#I created random values for x and y to test the functions
-x <- matrix(rnorm(400), ncol = 4)
-y <- rnorm(100)
-alpha <- 0.05
+#'x <- matrix(rnorm(400), ncol = 4)
+#'y <- rnorm(100)
+#'alpha <- 0.05
 
 my_lm <- function(y, x, alpha = 0.05) {
 
@@ -57,41 +51,42 @@ my_lm <- function(y, x, alpha = 0.05) {
   Cp <- sse + 2*p*sigma2.hat
 
   #Estimate of the variance of the estimated beta
-  var.beta <- sigma2.hat * solve(t(X) %*% X)
+  var.beta <- diag(as.numeric(sigma2.hat) * solve(t(X) %*% X))
 
   #Calculating confidence intervals
   quant <- 1 - alpha/2
-  ci.beta <-c(beta.hat-qnorm(p=quant)*sqrt(var.beta), beta.hat+ qnorm(p=quant)*sqrt(var.beta))
+  ci.beta <- c(as.matrix(beta.hat$par) - qnorm(p = quant)*sqrt(var.beta), as.matrix(beta.hat$par)+ qnorm(p = quant)*sqrt(var.beta))
 
   #Calculating F statistics
   dfm <- p-1
   dfe <- n - p
   ssm <- sum((y_hat - y_mean)^2)
-
-  msm <- ssm/dfm
-  mse <- sse/dfe
-
-  f_stats <- msm/mse
-  p_value <- 1-pf(f_stats,n-1, df)
+  msm <- (ssm/dfm)
+  mse <- (sse/dfe)
+  f_stats <- (msm/mse)
+  p_value <- (1-pf(f_stats,n-1, df))
 
 
   # Return all estimated values
-  return(list(beta = c(beta.hat$par), sigma2 = sigma2.hat, Cp = Cp, R2 = R_squared, ci = ci.beta, f_statistic = f_stats, p-value = p_value))
-  }
+  return(list(beta = c(beta.hat$par), sigma2 = sigma2.hat, Cp = Cp, R2 = R_squared, ci = ci.beta, f_statistic = f_stats, p_value = p_value, residuals = c(resid)))
 
-plot_residual <- function(residuals){
-  df_resid <- data.frame(y = resid)
+}
+
+plot_residual <- function(y, residuals){
+  df_resid <- data.frame(y = residuals)
   plot_resid <- ggplot(df_resid, aes(sample = y))
   return (plot_resid + stat_qq() + stat_qq_line() + ggtitle("QQ Plot Residuals"))
 
 }
 
-plot_histogram_residuals <- function (residuals){
-  df_resid <- data.frame(y = resid)
-  plot_hist <- ggplot(data = data, aes(x = df_resid)) +
-    geom_histogram(fill = 'steelblue', color = 'black') +
-    labs(title = 'Histogram of Residuals', x = 'Residuals', y = 'Frequency')
-  return (plot_hist)
+
+plot_histogram_residuals <- function(residuals){
+  plot_hist <- ggplot() + aes(residuals)+ geom_histogram(binwidth=1, colour="black", fill="white")
+  return(plot_hist)
+}
+
+plot_residuals_fitted <- function(residuals){
+
 
 }
 
