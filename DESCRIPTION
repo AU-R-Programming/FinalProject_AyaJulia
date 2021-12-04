@@ -3,7 +3,7 @@ Type: Package
 Title: Linear Regression
 Version: 0.1.0
 Author: Aya and Julia
-Maintainer: Aya and Julia <asm0073@auburn.edu and jzb0172@auburn.edu>
+Maintainer:
 Description: A linear regression is a statistical model that analyzes the relationship between a response variable (often called y) and one or more variables and their interactions (often called x or explanatory variables).
 License: What license is it under?
 Encoding: UTF-8
